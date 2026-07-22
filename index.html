@@ -753,6 +753,170 @@
       }
     }
 
+  
+    .main-video {
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      overflow: hidden;
+      background: var(--black);
+      box-shadow: var(--shadow);
+    }
+
+    .video-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .video-heading strong {
+      font-size: 16px;
+      letter-spacing: -.02em;
+    }
+
+    .video-heading span {
+      font-family: var(--mono);
+      color: var(--yellow);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .video-frame {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: var(--black);
+    }
+
+    .video-frame iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .sound-button {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      z-index: 2;
+      min-height: 46px;
+      padding: 11px 15px;
+      border: 1px solid var(--black);
+      border-radius: 999px;
+      background: var(--yellow);
+      color: var(--black);
+      font: 900 14px var(--sans);
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(0,0,0,.22);
+    }
+
+    .sound-button:hover {
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 620px) {
+      .video-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .sound-button {
+        right: 10px;
+        bottom: 10px;
+        min-height: 42px;
+        padding: 9px 12px;
+        font-size: 12px;
+      }
+    }
+
+  
+    .whatsapp-float {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 80;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 58px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      background: #25D366;
+      color: #ffffff;
+      border: 1px solid rgba(0,0,0,.12);
+      font-weight: 900;
+      box-shadow: 0 18px 36px rgba(0,0,0,.24);
+    }
+
+    .whatsapp-float:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 42px rgba(0,0,0,.28);
+    }
+
+    .whatsapp-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ffffff;
+      display: inline-block;
+    }
+
+    .video-fallback {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px 16px;
+      background: var(--black);
+      color: #d7e3e3;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .video-fallback p {
+      margin: 0;
+      font-size: 13px;
+      color: #d7e3e3;
+    }
+
+    .video-fallback .btn {
+      min-height: 42px;
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+
+    .hero-copy .cta-group,
+    .cta-band .cta-group,
+    .cta-panel .cta-group,
+    .final-actions {
+      row-gap: 10px;
+    }
+
+    .cta-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 760px) {
+      .whatsapp-float {
+        right: 12px;
+        left: 12px;
+        bottom: 12px;
+        justify-content: center;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -775,8 +939,8 @@
       </div>
 
       <div class="cta-group">
-        <a class="btn btn-primary" href="https://wa.me/573205710096?text=Hola%2C%20quiero%20consultar%20si%20califico%20para%20el%20sistema%20solar%20de%20%2412.900.000%20en%20Turbaco." target="_blank" rel="noopener">Ir a WhatsApp</a>
-        <a class="btn btn-secondary" href="#agendar-llamada">Quiero que me llamen</a>
+        <a class="btn btn-primary" href="https://wa.me/573205710096?text=Hola%2C%20quiero%20consultar%20si%20califico%20para%20el%20sistema%20solar%20de%20%2412.900.000%20en%20Turbaco." target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
+        <a class="btn btn-secondary" href="#agendar-llamada">WhatsApp o llamada</a>
       </div>
     </div>
   </nav>
@@ -784,6 +948,38 @@
   <main>
     <section class="hero" id="inicio">
       <div class="container">
+        <div class="main-video" aria-label="Video principal de la oferta solar para Turbaco">
+          <div class="video-heading">
+            <strong>Mira cómo esta solución puede cambiar la forma en que usas tu aire.</strong>
+            <span>video principal · energia grata</span>
+          </div>
+
+          <div class="video-frame">
+            <iframe
+              id="mainYouTubeVideo"
+              src="https://www.youtube-nocookie.com/embed/8ED4ytOOnFc?autoplay=1&amp;mute=1&amp;controls=0&amp;playsinline=1&amp;rel=0&amp;modestbranding=1&amp;enablejsapi=1"
+              title="Video principal de Energía Grata para Turbaco"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen>
+            </iframe>
+
+            <button class="sound-button" id="soundButton" type="button" aria-pressed="false">
+              Activar sonido
+            </button>
+          </div>
+
+          <div class="video-fallback">
+            <p>Si el video no carga dentro del sitio por restricciones de YouTube, ábrelo directamente.</p>
+            <div class="cta-group">
+              <a class="btn btn-primary" href="https://www.youtube.com/watch?v=8ED4ytOOnFc" target="_blank" rel="noopener">Ver video en YouTube</a>
+              <a class="btn btn-secondary" href="https://wa.me/573205710096?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20sistema%20solar%20de%20Turbaco." target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
+            </div>
+          </div>
+        </div>
+
+        
+
         <div class="hero-box">
           <div class="hero-grid">
             <div class="hero-copy">
@@ -796,8 +992,8 @@
               </p>
 
               <div class="cta-group">
-                <a class="btn btn-primary" href="https://wa.me/573205710096?text=Hola%2C%20quiero%20consultar%20si%20califico%20para%20el%20sistema%20solar%20de%20%2412.900.000%20en%20Turbaco." target="_blank" rel="noopener">Consultar por WhatsApp</a>
-                <a class="btn btn-secondary" href="#agendar-llamada">Quiero que me llamen</a>
+                <a class="btn btn-primary" href="https://wa.me/573205710096?text=Hola%2C%20quiero%20consultar%20si%20califico%20para%20el%20sistema%20solar%20de%20%2412.900.000%20en%20Turbaco." target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
+                <a class="btn btn-secondary" href="#agendar-llamada">WhatsApp o llamada</a>
               </div>
 
               <div class="hero-notes">
@@ -828,12 +1024,15 @@
           </div>
         </div>
 
+
+        
         <div class="cta-band">
+
           <div class="container cta-band-inner">
             <strong>¿Quieres saber rápido si esto aplica para tu casa o negocio?</strong>
             <div class="cta-group">
               <a class="btn btn-primary" href="https://wa.me/573205710096?text=Hola%2C%20quiero%20consultar%20si%20califico%20para%20el%20sistema%20solar%20de%20%2412.900.000%20en%20Turbaco." target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
-              <a class="btn btn-secondary" href="#agendar-llamada">Solicitar llamada</a>
+              <a class="btn btn-secondary" href="#agendar-llamada">WhatsApp o llamada</a>
             </div>
           </div>
         </div>
@@ -872,6 +1071,10 @@
 
         <div class="quote-box">
           No compraste un aire para tenerlo apagado. Lo compraste para vivir y trabajar mejor.
+        </div>
+        <div class="cta-stack">
+          <a class="btn btn-primary" href="https://wa.me/573205710096?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20sistema%20solar%20de%20Turbaco." target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
+          <a class="btn btn-secondary" href="#agendar-llamada">Quiero que me llamen</a>
         </div>
       </div>
     </section>
@@ -917,7 +1120,7 @@
             <p>Te respondemos por WhatsApp o te atendemos por llamada.</p>
             <div class="cta-group" style="justify-content:center">
               <a class="btn btn-primary" href="https://wa.me/573205710096?text=Hola%2C%20quiero%20consultar%20si%20califico%20para%20el%20sistema%20solar%20de%20%2412.900.000%20en%20Turbaco." target="_blank" rel="noopener">Entrar a WhatsApp</a>
-              <a class="btn btn-secondary" href="#agendar-llamada">Quiero que me llamen</a>
+              <a class="btn btn-secondary" href="#agendar-llamada">WhatsApp o llamada</a>
             </div>
           </div>
         </div>
@@ -970,7 +1173,7 @@
           </p>
           <div class="cta-group" style="justify-content:center">
             <a class="btn btn-primary" href="https://wa.me/573205710096?text=Hola%2C%20quiero%20consultar%20si%20califico%20para%20el%20sistema%20solar%20de%20%2412.900.000%20en%20Turbaco." target="_blank" rel="noopener">Quiero consultar por WhatsApp</a>
-            <a class="btn btn-secondary" href="#agendar-llamada">Quiero que me llamen</a>
+            <a class="btn btn-secondary" href="#agendar-llamada">WhatsApp o llamada</a>
           </div>
         </div>
       </div>
@@ -1079,7 +1282,7 @@
 
         <div class="final-actions">
           <a class="btn btn-primary" href="https://wa.me/573205710096?text=Hola%2C%20quiero%20consultar%20si%20califico%20para%20el%20sistema%20solar%20de%20%2412.900.000%20en%20Turbaco." target="_blank" rel="noopener">WhatsApp · +57 320 571 0096</a>
-          <a class="btn btn-secondary" href="#agendar-llamada">Quiero que me llamen</a>
+          <a class="btn btn-secondary" href="#agendar-llamada">WhatsApp o llamada</a>
         </div>
       </div>
     </section>
@@ -1106,6 +1309,8 @@
       const dateInput = document.getElementById("cbFecha");
       const status = document.getElementById("callbackStatus");
       const businessNumber = "573205710096";
+      // Reemplazar por la URL /exec del Web App de Google Apps Script.
+      const GAS_ENDPOINT = "PEGAR_URL_WEB_APP_AQUI";
 
       if (dateInput) {
         const today = new Date();
@@ -1128,17 +1333,49 @@
             readableDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
           }
 
+          const query = new URLSearchParams(window.location.search);
+          const payload = {
+            nombre: data.get("nombre"),
+            telefono: data.get("telefono"),
+            municipio: data.get("municipio"),
+            uso: data.get("uso"),
+            factura: data.get("factura"),
+            fechaLlamada: rawDate,
+            rangoHora: data.get("rango"),
+            comentario: data.get("comentario") || "",
+            consentimiento: data.get("consentimiento") ? "Sí" : "No",
+            campana: "Solar Turbaco 12.9M",
+            utmSource: query.get("utm_source") || "",
+            utmMedium: query.get("utm_medium") || "",
+            utmCampaign: query.get("utm_campaign") || "",
+            utmContent: query.get("utm_content") || "",
+            pagina: window.location.href,
+            userAgent: navigator.userAgent
+          };
+
+          if (GAS_ENDPOINT && !GAS_ENDPOINT.includes("PEGAR_URL")) {
+            fetch(GAS_ENDPOINT, {
+              method: "POST",
+              mode: "no-cors",
+              headers: { "Content-Type": "text/plain;charset=utf-8" },
+              body: JSON.stringify(payload),
+              keepalive: true
+            }).catch(function () {
+              // WhatsApp sigue funcionando aunque el registro remoto falle.
+            });
+          }
+
           const message = [
             "Hola, quiero solicitar una llamada sobre el sistema solar de $12.900.000 en Turbaco.",
             "",
-            "Nombre: " + data.get("nombre"),
-            "Celular: " + data.get("telefono"),
-            "Municipio: " + data.get("municipio"),
-            "Uso: " + data.get("uso"),
-            "Factura mensual: " + data.get("factura"),
+            "Nombre: " + payload.nombre,
+            "Celular: " + payload.telefono,
+            "Municipio: " + payload.municipio,
+            "Uso: " + payload.uso,
+            "Factura mensual: " + payload.factura,
             "Día para la llamada: " + readableDate,
-            "Horario disponible: " + data.get("rango"),
-            "Comentario: " + (data.get("comentario") || "No indicó")
+            "Horario disponible: " + payload.rangoHora,
+            "Comentario: " + (payload.comentario || "No indicó")
           ].join("\n");
 
           const url = "https://wa.me/" + businessNumber + "?text=" + encodeURIComponent(message);
@@ -1150,6 +1387,57 @@
       }
     })();
   </script>
+
+
+  <script>
+    (function () {
+      const iframe = document.getElementById("mainYouTubeVideo");
+      const soundButton = document.getElementById("soundButton");
+      let soundEnabled = false;
+
+      function sendYouTubeCommand(command) {
+        if (!iframe || !iframe.contentWindow) return;
+        iframe.contentWindow.postMessage(
+          JSON.stringify({
+            event: "command",
+            func: command,
+            args: []
+          }),
+          "*"
+        );
+      }
+
+      if (soundButton) {
+        soundButton.addEventListener("click", function () {
+          soundEnabled = !soundEnabled;
+
+          if (soundEnabled) {
+            sendYouTubeCommand("unMute");
+            sendYouTubeCommand("playVideo");
+            soundButton.textContent = "Silenciar video";
+            soundButton.setAttribute("aria-pressed", "true");
+          } else {
+            sendYouTubeCommand("mute");
+            soundButton.textContent = "Activar sonido";
+            soundButton.setAttribute("aria-pressed", "false");
+          }
+        });
+      }
+
+      window.addEventListener("load", function () {
+        window.setTimeout(function () {
+          sendYouTubeCommand("mute");
+          sendYouTubeCommand("playVideo");
+        }, 900);
+      });
+    })();
+  </script>
+
+
+  <a class="whatsapp-float" href="https://wa.me/573205710096?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20sistema%20solar%20de%20Turbaco." target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+    <span class="whatsapp-dot"></span>
+    <span>WhatsApp</span>
+  </a>
 
 </body>
 </html>
