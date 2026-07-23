@@ -1187,7 +1187,7 @@
           <h2>Déjanos tus datos y dinos cuándo puedes atender.</h2>
           <p>
             Elige el día y el rango de hora que mejor te funcione.
-            Un asesor de Energía Grata revisará tu solicitud y se comunicará contigo.
+            Un asesor de Energía Grata recibirá tu solicitud y se comunicará contigo en la fecha y franja seleccionadas.
           </p>
 
           <div class="quick-note">
@@ -1206,6 +1206,11 @@
             <div class="field">
               <label for="cbTelefono">Número de celular o WhatsApp</label>
               <input id="cbTelefono" name="telefono" autocomplete="tel" inputmode="tel" required placeholder="Ej. 300 000 0000" />
+            </div>
+
+            <div class="field">
+              <label for="cbEmail">Correo electrónico</label>
+              <input id="cbEmail" name="email" type="email" autocomplete="email" required placeholder="Ej. nombre@correo.com" />
             </div>
 
             <div class="field">
@@ -1263,7 +1268,7 @@
             <span>Autorizo a Energía Grata a contactarme por llamada o WhatsApp para atender esta solicitud.</span>
           </label>
 
-          <button class="btn btn-primary" type="submit">Solicitar mi llamada</button>
+          <button class="btn btn-primary" type="submit">Agendar mi llamada</button>
           <div class="form-status" id="callbackStatus" role="status"></div>
         </form>
       </div>
@@ -1308,8 +1313,7 @@
       const form = document.getElementById("callbackForm");
       const dateInput = document.getElementById("cbFecha");
       const status = document.getElementById("callbackStatus");
-      const businessNumber = "573205710096";
-      // Reemplazar por la URL /exec del Web App de Google Apps Script.
+      const submitButton = form ? form.querySelector('button[type="submit"]') : null;
       const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbw8QaPEjGJmGAvXynyU07gpX9RPYrq_M8Pye69JeZN6fGVvitJ8JKFTY_cAyM3UfUIl-g/exec";
 
       if (dateInput) {
@@ -1321,26 +1325,25 @@
       }
 
       if (form) {
-        form.addEventListener("submit", function (event) {
+        form.addEventListener("submit", async function (event) {
           event.preventDefault();
 
-          const data = new FormData(form);
-          const rawDate = data.get("fecha");
-          let readableDate = rawDate;
-
-          if (rawDate) {
-            const parts = rawDate.split("-");
-            readableDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
           }
 
+          const data = new FormData(form);
           const query = new URLSearchParams(window.location.search);
+
           const payload = {
             nombre: data.get("nombre"),
             telefono: data.get("telefono"),
+            email: data.get("email"),
             municipio: data.get("municipio"),
             uso: data.get("uso"),
             factura: data.get("factura"),
-            fechaLlamada: rawDate,
+            fechaLlamada: data.get("fecha"),
             rangoHora: data.get("rango"),
             comentario: data.get("comentario") || "",
             consentimiento: data.get("consentimiento") ? "Sí" : "No",
@@ -1353,36 +1356,48 @@
             userAgent: navigator.userAgent
           };
 
-          if (GAS_ENDPOINT && !GAS_ENDPOINT.includes("PEGAR_URL")) {
-            fetch(GAS_ENDPOINT, {
-              method: "POST",
-              mode: "no-cors",
-              headers: { "Content-Type": "text/plain;charset=utf-8" },
-              body: JSON.stringify(payload),
-              keepalive: true
-            }).catch(function () {
-              // WhatsApp sigue funcionando aunque el registro remoto falle.
-            });
+          const originalText = submitButton ? submitButton.textContent : "";
+
+          if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = "Agendando...";
           }
 
-          const message = [
-            "Hola, quiero solicitar una llamada sobre el sistema solar de $12.900.000 en Turbaco.",
-            "",
-            "Nombre: " + payload.nombre,
-            "Celular: " + payload.telefono,
-            "Municipio: " + payload.municipio,
-            "Uso: " + payload.uso,
-            "Factura mensual: " + payload.factura,
-            "Día para la llamada: " + readableDate,
-            "Horario disponible: " + payload.rangoHora,
-            "Comentario: " + (payload.comentario || "No indicó")
-          ].join("\n");
-
-          const url = "https://wa.me/" + businessNumber + "?text=" + encodeURIComponent(message);
-
           status.style.display = "block";
-          status.textContent = "Tus datos están listos. Se abrirá WhatsApp para que confirmes y envíes la solicitud.";
-          window.open(url, "_blank", "noopener");
+          status.style.background = "var(--mist)";
+          status.textContent = "Estamos registrando tu solicitud de llamada.";
+
+          try {
+            await fetch(GAS_ENDPOINT, {
+              method: "POST",
+              mode: "no-cors",
+              headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+              },
+              body: JSON.stringify(payload),
+              keepalive: true
+            });
+
+            status.style.background = "var(--lime)";
+            status.innerHTML =
+              "<strong>¡Solicitud recibida!</strong><br>" +
+              "Te enviamos una confirmación al correo indicado. " +
+              "Un asesor de Energía Grata te contactará en la fecha y franja que seleccionaste.";
+
+            form.reset();
+            document.getElementById("cbMunicipio").value = "Turbaco";
+          } catch (error) {
+            console.error(error);
+            status.style.background = "#ffe4df";
+            status.innerHTML =
+              "<strong>No pudimos registrar la solicitud.</strong><br>" +
+              "Por favor, inténtalo nuevamente o comunícate con Energía Grata.";
+          } finally {
+            if (submitButton) {
+              submitButton.disabled = false;
+              submitButton.textContent = originalText;
+            }
+          }
         });
       }
     })();
